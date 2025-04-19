@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Cek Lokasimu</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+    #lokasi { margin-top: 20px; font-size: 1.2em; }
+  </style>
+</head>
+<body>
+  <h1>Hai! 😊</h1>
+  <p>Klik tombol di bawah ini untuk masuk yang dikirim andika.</p>
+  <button onclick="mintaLokasi()">Klik sini ya Wulan</button>
+
+  <div id="lokasi"></div>
+
+  <script>
+    function mintaLokasi() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(tampilkanLokasi, errorLokasi);
+      } else {
+        document.getElementById("lokasi").innerText = "Browser kamu tidak mendukung pelacakan lokasi.";
+      }
+    }
+
+    function tampilkanLokasi(posisi) {
+      const lat = posisi.coords.latitude;
+      const lon = posisi.coords.longitude;
+      const linkMaps = `https://www.google.com/maps?q=${lat},${lon}`;
+      document.getElementById("lokasi").innerHTML = `
+        📍 Lokasimu sekarang:<br>
+        Latitude: ${lat}<br>
+        Longitude: ${lon}<br>
+        <a href="${linkMaps}" target="_blank">Lihat di Google Maps</a>
+      `;
+    }
+
+    function errorLokasi(error) {
+      document.getElementById("lokasi").innerText = "Gagal mengambil lokasi: " + error.message;
+    }
+  </script>
+</body>
+</html>
